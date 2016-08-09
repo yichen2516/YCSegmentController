@@ -25,5 +25,6 @@ struct YCSegmentPageControlItemConfig {
 
     var highlightTextColor: UIColor = UIColor(red: 255/255, green: 101/255, blue: 121/255, alpha: 1)
     
+    var itemSpacing: CGFloat        = 10
 }
 

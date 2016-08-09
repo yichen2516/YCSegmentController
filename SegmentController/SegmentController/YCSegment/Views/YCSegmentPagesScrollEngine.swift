@@ -23,7 +23,7 @@ class YCSegmentPagesScrollEngine: UIView {
     
     ///设置横向滚动距离
     ///
-    ///自动设置contnetSize
+    ///通过设置contentView的宽度，自动设置contnetSize
     var contentSizeWidth: CGFloat {
         set {
             contentView.snp_updateConstraints { (make) in
@@ -53,6 +53,10 @@ class YCSegmentPagesScrollEngine: UIView {
         
     }
     
+    func scrollTo(page: Int) {
+        let needsContentOffsetX = scrollView.frame.size.width * CGFloat(page - 1)
+        scrollView.setContentOffset(CGPointMake(needsContentOffsetX, 0), animated: false)
+    }
     
     let contentView: UIView = UIView(frame: .zero)
 }

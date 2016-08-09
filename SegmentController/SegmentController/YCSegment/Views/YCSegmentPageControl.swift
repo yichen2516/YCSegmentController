@@ -35,10 +35,14 @@ class YCSegmentPageControl: UIView {
         backgroundColor = .whiteColor()
         if let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             collectionViewLayout.scrollDirection   = .Horizontal
-            collectionViewLayout.estimatedItemSize = CGSizeMake(20, 43)
-            collectionViewLayout.sectionInset      = UIEdgeInsetsMake(0, 10, 0, 10)
+//            collectionViewLayout.estimatedItemSize = CGSizeMake(20, 43)
+            collectionViewLayout.sectionInset      = UIEdgeInsetsMake(0,
+                                                                      YCSegmentConfiguration.globalConfig.pageControlItemConfig.itemSpacing,
+                                                                      0,
+                                                                      YCSegmentConfiguration.globalConfig.pageControlItemConfig.itemSpacing)
         }
-        
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator   = false
         collectionView.backgroundColor = .whiteColor()
     }
     
@@ -98,7 +102,6 @@ class YCSegmentPageControlItem : UICollectionViewCell {
     }
     
     func setupAllViews() {
-        label.text = "测试啦"
         label.textAlignment = .Center
         
         contentView.snp_makeConstraints { (make) in
@@ -108,11 +111,8 @@ class YCSegmentPageControlItem : UICollectionViewCell {
         contentView.addSubview(label)
         label.snp_makeConstraints { (make) in
             make.center.equalTo(contentView.snp_center)
-            make.left.equalTo(contentView.snp_left)
-            make.right.equalTo(contentView.snp_right)
             make.width.greaterThanOrEqualTo(10)
             make.height.equalTo(contentView.snp_height)
-            make.height.equalTo(43)
         }
     }
 }

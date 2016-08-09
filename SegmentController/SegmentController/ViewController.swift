@@ -31,6 +31,11 @@ class ViewController: UIViewController, YCSegmentDelegate, YCSegmentDataSource {
     func numberOfPagesInYCSegment(segment: YCSegmentView) -> Int {
         return 4
     }
+    func ycSegment(segment: YCSegmentView, modelForItemAtPage: Int) -> YCSegmentItemModel! {
+        let model = YCSegmentItemModel()
+        model.title = "测试"
+        return model
+    }
 
 
 }

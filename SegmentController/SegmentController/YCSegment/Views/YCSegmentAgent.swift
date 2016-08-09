@@ -19,6 +19,8 @@ class YCSegmentAgent: NSObject {
     
     var pages: Array<UIViewController> = []
     
+    var currentSelectedItemAtIndex = 0
+    var currentSpacing : CGFloat?
 }
 
 
@@ -49,7 +51,7 @@ extension YCSegmentAgent: UICollectionViewDelegate , UICollectionViewDataSource,
         }
         
         item.model = model
-        
+        item.selected = currentSelectedItemAtIndex == indexPath.item
         return item
     }
     
@@ -67,13 +69,29 @@ extension YCSegmentAgent: UICollectionViewDelegate , UICollectionViewDataSource,
         return CGSizeMake(width, collectionView.frame.size.height)
     }
     
+    
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        print(collectionView.contentSize)
+        if collectionView.contentSize == .zero {
+            return YCSegmentConfiguration.globalConfig.pageControlItemConfig.itemSpacing
+        }
+        if YCSegmentConfiguration.globalConfig.pageControlItemConfig.needTileItems && collectionView.contentSize != .zero && collectionView.contentSize.width <= collectionView.frame.size.width {
+            if currentSpacing != nil {
+                return currentSpacing!
+            }
+            currentSpacing = (collectionView.frame.size.width - collectionView.contentSize.width) / CGFloat(maxCountOfPage - 1) + YCSegmentConfiguration.globalConfig.pageControlItemConfig.itemSpacing
+            return currentSpacing!
+        }
         return YCSegmentConfiguration.globalConfig.pageControlItemConfig.itemSpacing
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
         segmentBody?.scrollTo(indexPath.item + 1)
+        if currentSelectedItemAtIndex != indexPath.item {
+            currentSelectedItemAtIndex = indexPath.item
+            collectionView.reloadData()
+        }
     }
     
     
@@ -87,7 +105,12 @@ extension YCSegmentAgent: UICollectionViewDelegate , UICollectionViewDataSource,
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         guard scrollView == segmentBody?.scrollView else {return}
-        
+        let page = currentPage()
+        if currentSelectedItemAtIndex != page - 1 {
+            currentSelectedItemAtIndex = page - 1
+            segmentHeader?.collectionView.reloadData()
+            segmentHeader?.collectionView.selectItemAtIndexPath(NSIndexPath(forItem: page - 1, inSection: 0), animated: true, scrollPosition: UICollectionViewScrollPosition.CenteredHorizontally)
+        }
         print("减速结束：" + "\(scrollView.contentOffset)")
     }
     
@@ -107,4 +130,5 @@ extension YCSegmentAgent: UICollectionViewDelegate , UICollectionViewDataSource,
         }
         return page
     }
+    
 }

@@ -29,7 +29,7 @@ class ViewController: UIViewController, YCSegmentDelegate, YCSegmentDataSource {
     }
 
     func numberOfPagesInYCSegment(segment: YCSegmentView) -> Int {
-        return 4
+        return 40
     }
     func ycSegment(segment: YCSegmentView, modelForItemAtPage: Int) -> YCSegmentItemModel! {
         let model = YCSegmentItemModel()

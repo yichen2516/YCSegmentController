@@ -86,6 +86,16 @@ class YCSegmentPageControlItem : UICollectionViewCell {
         }
     }
     
+    override var selected: Bool {
+        didSet {
+            if selected {
+                label.textColor = YCSegmentConfiguration.globalConfig.pageControlItemConfig.highlightTextColor
+            } else {
+                label.textColor = YCSegmentConfiguration.globalConfig.pageControlItemConfig.textColor
+            }
+        }
+    }
+    
     private func setupConfig() {
         label.textColor = YCSegmentConfiguration.globalConfig.pageControlItemConfig.textColor
         label.font      = YCSegmentConfiguration.globalConfig.pageControlItemConfig.font

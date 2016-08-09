@@ -31,6 +31,11 @@ struct YCSegmentPageControlItemConfig {
     /// 该属性将控制标题左右尽头内边距
     var itemSpacing: CGFloat = 20
 
+    /// 标题左右距离屏幕边缘的距离
+    ///
+    /// 为 nil 时，默认使用 itemSpacing
+    var itemsInsetLeft : CGFloat?
+    var itemsInsetRight : CGFloat?
     
     /// 当标题宽度只和过短时，是否需要将标题两端对齐
     ///

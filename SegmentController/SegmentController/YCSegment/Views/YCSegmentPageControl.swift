@@ -35,10 +35,11 @@ class YCSegmentPageControl: UIView {
         backgroundColor = .whiteColor()
         if let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             collectionViewLayout.scrollDirection   = .Horizontal
-//            collectionViewLayout.estimatedItemSize = CGSizeMake(20, 43)
             collectionViewLayout.sectionInset      = UIEdgeInsetsMake(0,
+                                                                      YCSegmentConfiguration.globalConfig.pageControlItemConfig.itemsInsetLeft ??
                                                                       YCSegmentConfiguration.globalConfig.pageControlItemConfig.itemSpacing,
                                                                       0,
+                                                                      YCSegmentConfiguration.globalConfig.pageControlItemConfig.itemsInsetRight ??
                                                                       YCSegmentConfiguration.globalConfig.pageControlItemConfig.itemSpacing)
         }
         collectionView.showsHorizontalScrollIndicator = false

@@ -14,7 +14,6 @@ class YCSegmentConfiguration {
     
     var pageControlItemConfig = YCSegmentPageControlItemConfig()
     
-    
 }
 
 struct YCSegmentPageControlItemConfig {

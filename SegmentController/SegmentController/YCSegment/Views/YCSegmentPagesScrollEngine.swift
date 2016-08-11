@@ -26,17 +26,6 @@ class YCSegmentPagesScrollEngine: UIView {
         setupAllViews()
     }
     
-//    var numberOfPages : Int {
-//        set {
-//            contentView.snp_updateConstraints { (make) in
-//                make.width.equalTo(scrollView.snp_width).multipliedBy(numberOfPages)
-//            }
-//            contentView.layoutIfNeeded()
-//        }
-//        get {
-//            return 0
-//        }
-//    }
     ///设置横向滚动距离
     ///
     ///通过设置contentView的宽度，自动设置contnetSize
@@ -112,8 +101,8 @@ class YCSegmentPagesScrollEngine: UIView {
     private func layoutViewController(
         atPage: Int
         ) {
-        let vc = viewControllers[atPage]
-        let vcLeft = viewControllers[atPage - 1]
+        let vc      = viewControllers[atPage]
+        let vcLeft  = viewControllers[atPage - 1]
         let vcRight = viewControllers[atPage + 1]
         
         if var frame = vc?.view.frame {
@@ -159,7 +148,6 @@ extension YCSegmentPagesScrollEngine {
             make.right.equalTo(self.scrollView.snp_right)
             make.height.equalTo(self.scrollView.snp_height)
             make.centerY.equalTo(self.scrollView.snp_centerY)
-//            make.width.equalTo(self.scrollView.snp_width).multipliedBy(1)
             make.width.equalTo(1)
         })
     }

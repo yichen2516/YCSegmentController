@@ -24,6 +24,14 @@ class YCSegmentAgent: NSObject {
     func selected(page: Int) {
         guard page != 0 else {return}
         guard page <= maxCountOfPage else {return}
+        segmentBody?.addViewController({[weak self] () -> UIViewController in
+            var vc: UIViewController?
+            if let view = self?.segmentView {
+                let item = self?.segmentHeader?.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: page - 1, inSection: 0)) as? YCSegmentPageControlItem
+                vc = self?.segmentView?.dataSource?.ycSegment?(view, viewControllerAtPage: page, userInfo: item?.model?.userInfo ?? [:])
+            }
+            return vc ?? UIViewController()
+            }, atPage: page)
         segmentHeader?.collectionView.selectItemAtIndexPath(NSIndexPath(forItem: page - 1, inSection: 0), animated: true, scrollPosition: UICollectionViewScrollPosition.CenteredHorizontally)
         segmentBody?.scrollTo(page)
     }
@@ -108,11 +116,21 @@ extension YCSegmentAgent: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        segmentBody?.scrollTo(indexPath.item + 1)
+        let page = indexPath.item + 1
+        segmentBody?.scrollTo(page)
         if currentSelectedItemAtIndex != indexPath.item {
             currentSelectedItemAtIndex = indexPath.item
             collectionView.selectItemAtIndexPath(indexPath, animated: true, scrollPosition: .CenteredHorizontally)
         }
+        
+        segmentBody?.addViewController({[weak self] () -> UIViewController in
+            var vc: UIViewController?
+            if let view = self?.segmentView {
+                let item = self?.segmentHeader?.collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: page - 1, inSection: 0)) as? YCSegmentPageControlItem
+                vc = self?.segmentView?.dataSource?.ycSegment?(view, viewControllerAtPage: page, userInfo: item?.model?.userInfo ?? [:])
+            }
+            return vc ?? UIViewController()
+            }, atPage: page)
         print("选中")
     }
     

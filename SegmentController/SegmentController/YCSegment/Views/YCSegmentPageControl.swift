@@ -22,12 +22,10 @@ class YCSegmentPageControl: UIView {
     
 
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-//    let line = UIView(frame: .zero)
     
     func setupAllViews() {
         addSubview(collectionView)
         collectionView.registerClass(YCSegmentPageControlItem.self, forCellWithReuseIdentifier: YCSegmentPageControlItem.id)
-//        collectionView.addSubview(line)
         snp_layouts()
         baseStyles()
     }
@@ -47,7 +45,6 @@ class YCSegmentPageControl: UIView {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator   = false
         collectionView.backgroundColor = .whiteColor()
-//        line.backgroundColor = UIColor.redColor()
     }
     
     
@@ -62,20 +59,7 @@ class YCSegmentPageControl: UIView {
         return view
     }()
     
-//    func setLineX(x: CGFloat) {
-//        var frame = line.frame
-//        frame.origin.x = x
-//        UIView.animateWithDuration(0.13) {
-//            self.line.frame = frame
-//        }
-//    }
-    
-//    func setLineTo(item: YCSegmentPageControlItem) {
-//        let frame = CGRectMake(item.frame.origin.x, item.frame.size.height - 2, item.frame.size.width, 2)
-//        UIView.animateWithDuration(0.13) {
-//            self.line.frame = frame
-//        }
-//    }
+
 }
 
 extension YCSegmentPageControl {

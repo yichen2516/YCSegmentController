@@ -19,8 +19,7 @@ import SnapKit
     
     @objc optional func ycSegment(segment: YCSegmentView, modelForItemAtPage: Int) -> YCSegmentItemModel!
     
-    @objc optional func ycSegment(segment: YCSegmentView, viewControllerAtPage: Int) -> UIViewController!
-    
+    @objc optional func ycSegment(segment: YCSegmentView, viewControllerAtPage: Int, userInfo: [String: AnyObject]) -> UIViewController!
     
 }
 
@@ -30,6 +29,9 @@ class YCSegmentView: UIView {
         pageControl.collectionView.reloadData()
     }
     
+    func selected(page: Int) {
+        agent.selected(page)
+    }
 
     weak var delegate  : YCSegmentDelegate? {
         didSet {
@@ -59,7 +61,6 @@ class YCSegmentView: UIView {
     }
     
     
-    
 }
 
 extension YCSegmentView {
@@ -72,7 +73,6 @@ extension YCSegmentView {
         agent.segmentView   = self
         agent.segmentHeader = pageControl
         agent.segmentBody   = scrollEngine
-        
         
         snp_layouts()
     }

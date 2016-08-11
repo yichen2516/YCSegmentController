@@ -96,7 +96,7 @@ extension YCSegmentAgent: UICollectionViewDelegate, UICollectionViewDataSource, 
         let string = NSString(string: model.title ?? "")
         let width = string.boundingRectWithSize(CGSizeMake(UIScreen.mainScreen().bounds.width / 2, 100), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [
             NSFontAttributeName: YCSegmentConfiguration.globalConfig.pageControlItemConfig.font
-            ], context: nil).size.width
+            ], context: nil).size.width + YCSegmentConfiguration.globalConfig.pageControlItemConfig.selectedIndicatorPadding * 2
         return CGSizeMake(width, collectionView.frame.size.height)
     }
     

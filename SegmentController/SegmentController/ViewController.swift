@@ -46,7 +46,7 @@ class ViewController: UIViewController, YCSegmentDelegate, YCSegmentDataSource {
 
     func ycSegment(segment: YCSegmentView, viewControllerAtPage: Int, userInfo: [String: AnyObject]) -> UIViewController! {
         print("\(viewControllerAtPage) 需要控制器")
-        let vc = UITableViewController(style: UITableViewStyle.Plain)
+        let vc = TestTableViewController(style: UITableViewStyle.Plain)
         let r = CGFloat(arc4random() % 255)
         let g = CGFloat(arc4random() % 255)
         let b = CGFloat(arc4random() % 255)

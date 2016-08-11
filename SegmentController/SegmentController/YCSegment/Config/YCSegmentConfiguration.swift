@@ -36,6 +36,10 @@ struct YCSegmentPageControlItemConfig {
     var itemsInsetLeft : CGFloat?
     var itemsInsetRight : CGFloat?
     
+    
+    var selectedIndicatorPadding: CGFloat = 10
+    var selectedindicatorHeight : CGFloat = 2
+    
     /// 当标题宽度只和过短时，是否需要将标题两端对齐
     ///
     /// 当标题宽度只和可以满足滚动时，该属性无效。

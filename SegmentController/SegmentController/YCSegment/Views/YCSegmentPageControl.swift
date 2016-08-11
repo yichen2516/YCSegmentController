@@ -137,10 +137,10 @@ class YCSegmentPageControlItem : UICollectionViewCell {
         selectedIndicator.backgroundColor = YCSegmentConfiguration.globalConfig.pageControlItemConfig.highlightTextColor
         selectedIndicator.hidden = true
         selectedIndicator.snp_makeConstraints { (make) in
-            make.left.equalTo(label.snp_left)
-            make.right.equalTo(label.snp_right)
+            make.left.equalTo(contentView.snp_left).offset(-YCSegmentConfiguration.globalConfig.pageControlItemConfig.selectedIndicatorPadding)
+            make.right.equalTo(contentView.snp_right).offset(YCSegmentConfiguration.globalConfig.pageControlItemConfig.selectedIndicatorPadding)
             make.bottom.equalTo(contentView.snp_bottom)
-            make.height.equalTo(2)
+            make.height.equalTo(YCSegmentConfiguration.globalConfig.pageControlItemConfig.selectedindicatorHeight)
         }
     }
 }

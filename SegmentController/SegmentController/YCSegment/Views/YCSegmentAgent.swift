@@ -63,7 +63,15 @@ extension YCSegmentAgent: UICollectionViewDelegate, UICollectionViewDataSource, 
         return number
     }
     
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        if let dateSource = segmentView?.dataSource {
+            if let view = segmentView {
+                if let item = dateSource.ycSegment?(view, customItemAtPage: indexPath.item + 1) {
+                    return item
+                }
+            }
+        }
         let item = collectionView.dequeueReusableCellWithReuseIdentifier(YCSegmentPageControlItem.id,
                                                                          forIndexPath: indexPath) as! YCSegmentPageControlItem
         guard
@@ -81,12 +89,16 @@ extension YCSegmentAgent: UICollectionViewDelegate, UICollectionViewDataSource, 
         return item
     }
     
+    
     func collectionView(
         collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath ) -> CGSize {
         guard
             let view = segmentView
             else {
                 return .zero
+        }
+        if let width = segmentView?.dataSource?.ycSegment?(view, customItemWidthAtPage: indexPath.item + 1) {
+            return CGSizeMake(width, collectionView.frame.size.height)
         }
         guard
             let model = segmentView?.dataSource?.ycSegment?(view, modelForItemAtPage: indexPath.item)

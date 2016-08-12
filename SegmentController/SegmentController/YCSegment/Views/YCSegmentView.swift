@@ -21,6 +21,9 @@ import SnapKit
     
     @objc optional func ycSegment(segment: YCSegmentView, viewControllerAtPage: Int, userInfo: [String: AnyObject]) -> UIViewController!
     
+    
+    @objc optional func ycSegment(segment: YCSegmentView, customItemAtPage: Int) -> UICollectionViewCell
+    @objc optional func ycSegment(segment: YCSegmentView, customItemWidthAtPage: Int) -> CGFloat
 }
 
 class YCSegmentView: UIView {
@@ -45,10 +48,23 @@ class YCSegmentView: UIView {
         }
     }
     
-    let agent         : YCSegmentAgent             = YCSegmentAgent()
     let pageControl   : YCSegmentPageControl       = YCSegmentPageControl(frame: .zero)
     let scrollEngine  : YCSegmentPagesScrollEngine = YCSegmentPagesScrollEngine(frame: .zero)
     
+    let agent         : YCSegmentAgent             = YCSegmentAgent()
+    
+    /// 注册一个自定义的 item， 它必须为一个`UICollectionViewCell`的子类
+    func registerClass(itemClass: AnyClass?, forItemWithReuseIdentifier: String) {
+        pageControl.registerClass(itemClass, forItemWithReuseIdentifier: forItemWithReuseIdentifier)
+    }
+    /// 注册一个自定义的 item
+    func registerNib(nib: UINib?, forItemWidthReuseIdentifier: String) {
+        pageControl.registerNib(nib, forItemWidthReuseIdentifier: forItemWidthReuseIdentifier)
+    }
+    /// 取出一个 item
+    func dequeueReuseableItemWidthReuseIdentifier(identifier: String, forPage: Int) -> UICollectionViewCell {
+        return pageControl.dequeueReuseableItemWidthReuseIdentifier(identifier, forPage: forPage)
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

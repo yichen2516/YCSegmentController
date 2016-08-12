@@ -20,17 +20,35 @@ class YCSegmentPageControl: UIView {
         setupAllViews()
     }
     
+    
+    func registerClass(itemClass: AnyClass?, forItemWithReuseIdentifier: String) {
+        collectionView.registerClass(itemClass, forCellWithReuseIdentifier: forItemWithReuseIdentifier)
+    }
+    
+    func registerNib(nib: UINib?, forItemWidthReuseIdentifier: String) {
+        collectionView.registerNib(nib, forCellWithReuseIdentifier: forItemWidthReuseIdentifier)
+    }
+    
+    func dequeueReuseableItemWidthReuseIdentifier(identifier: String, forPage: Int) -> UICollectionViewCell {
+        guard forPage >= 1 else {
+            fatalError("`page` must greater than or equal to 1")
+        }
+        return collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: NSIndexPath(forItem: forPage - 1, inSection: 0))
+    }
+    
 
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
-    func setupAllViews() {
+    private func setupAllViews() {
         addSubview(collectionView)
         collectionView.registerClass(YCSegmentPageControlItem.self, forCellWithReuseIdentifier: YCSegmentPageControlItem.id)
         snp_layouts()
         baseStyles()
     }
     
-    func baseStyles(){
+    
+    
+    private func baseStyles(){
         backgroundColor = .whiteColor()
         if let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             collectionViewLayout.scrollDirection   = .Horizontal
@@ -41,10 +59,10 @@ class YCSegmentPageControl: UIView {
                                                                       YCSegmentConfiguration.globalConfig.pageControlItemConfig.itemsInsetRight ??
                                                                       YCSegmentConfiguration.globalConfig.pageControlItemConfig.itemSpacing)
         }
-        collectionView.scrollsToTop = false
+        collectionView.scrollsToTop                   = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator   = false
-        collectionView.backgroundColor = .whiteColor()
+        collectionView.backgroundColor                = .whiteColor()
     }
     
     
@@ -74,10 +92,11 @@ extension YCSegmentPageControl {
 
 class YCSegmentPageControlItem : UICollectionViewCell {
     
-    static let id = "cellReuseIdentifiy"
+    static let id = "defaultYCSegmentPageControlItemItemReuseIdentifiy"
     
     let label             = UILabel(frame: .zero)
     let selectedIndicator = UIView(frame: .zero)
+    let doteFlag          = UIView(frame: .zero)
     
     var model: YCSegmentItemModel? {
         didSet {
@@ -141,6 +160,16 @@ class YCSegmentPageControlItem : UICollectionViewCell {
             make.right.equalTo(contentView.snp_right).offset(YCSegmentConfiguration.globalConfig.pageControlItemConfig.selectedIndicatorPadding)
             make.bottom.equalTo(contentView.snp_bottom)
             make.height.equalTo(YCSegmentConfiguration.globalConfig.pageControlItemConfig.selectedindicatorHeight)
+        }
+        
+        contentView.addSubview(doteFlag)
+        doteFlag.clipsToBounds = true
+        doteFlag.backgroundColor = YCSegmentConfiguration.globalConfig.pageControlItemConfig.highlightTextColor
+        doteFlag.layer.cornerRadius = 4
+        doteFlag.snp_makeConstraints { (make) in
+            make.left.equalTo(label.snp_right).offset(2)
+            make.centerY.equalTo(label.snp_centerY)
+            make.size.equalTo(CGSizeMake(8, 8))
         }
     }
 }
